@@ -75,26 +75,23 @@ func RangeQueryNumeric(field string, query map[string]interface{}, mappings *met
 	}
 
 	min := 0.0
-	max := 0.0
+	max := float64(math.MaxInt64)
 	minInclusive := false
 	maxInclusive := false
-	if value.GT != nil && value.GT.(float64) > 0 {
+	if value.GT != nil && value.GT.(float64) > min {
 		min = value.GT.(float64)
 
 	}
-	if value.GTE != nil && value.GTE.(float64) > 0 {
+	if value.GTE != nil && value.GTE.(float64) >= min {
 		min = value.GTE.(float64)
 		minInclusive = true
 	}
-	if value.LT != nil && value.LT.(float64) > 0 {
+	if value.LT != nil && value.LT.(float64) < max {
 		max = value.LT.(float64)
 	}
-	if value.LTE != nil && value.LTE.(float64) > 0 {
+	if value.LTE != nil && value.LTE.(float64) <= max {
 		max = value.LTE.(float64)
 		maxInclusive = true
-	}
-	if max == 0 {
-		max = float64(math.MaxInt64)
 	}
 	subq := bluge.NewNumericRangeInclusiveQuery(min, max, minInclusive, maxInclusive).SetField(field)
 	if value.Boost >= 0 {
