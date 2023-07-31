@@ -209,7 +209,7 @@ func RangeQueryTime(field string, query map[string]interface{}, mappings *meta.M
 		}
 	}
 	if max.IsZero() {
-		max = time.Now()
+		max = time.Date(2166, 12, 22, 12, 0, 0, 0, time.UTC)
 	}
 	subq := bluge.NewDateRangeInclusiveQuery(min.UTC(), max.UTC(), minInclusive, maxInclusive).SetField(field)
 	if value.Boost >= 0 {
