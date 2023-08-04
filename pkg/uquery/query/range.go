@@ -74,7 +74,7 @@ func RangeQueryNumeric(field string, query map[string]interface{}, mappings *met
 		}
 	}
 
-	min := 0.0
+	min := float64(math.MinInt64)
 	max := float64(math.MaxInt64)
 	minInclusive := false
 	maxInclusive := false
